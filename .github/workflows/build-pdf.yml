@@ -18,7 +18,7 @@ jobs:
         uses: typst-community/setup-typst@v4
 
       - name: Compile PDF
-        run: typst compile --font-path fonts main.typ main.pdf
+        run: typst compile --font-path fonts main.typ miri_preparation.pdf
 
       - name: Compute release name
         id: meta
@@ -30,8 +30,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.meta.outputs.tag }}
-          name: ${{ steps.meta.outputs.date }} — ${{ github.event.head_commit.message }}
-          files: main.pdf
+          name: ${{ steps.meta.outputs.date }}
+          files: miri_preparation.pdf
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
