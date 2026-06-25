@@ -1,0 +1,37 @@
+name: Build and Release PDF
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Typst
+        uses: typst-community/setup-typst@v4
+
+      - name: Compile PDF
+        run: typst compile --font-path fonts main.typ main.pdf
+
+      - name: Compute release name
+        id: meta
+        run: |
+          echo "date=$(date +'%Y-%m-%d %H:%M')" >> "$GITHUB_OUTPUT"
+          echo "tag=$(date +'%Y.%m.%d')-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
+      - name: Release PDF
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.meta.outputs.tag }}
+          name: ${{ steps.meta.outputs.date }} — ${{ github.event.head_commit.message }}
+          files: main.pdf
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
