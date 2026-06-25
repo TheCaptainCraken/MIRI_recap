@@ -98,3 +98,30 @@ A scalar greater than $1$ stretches the vector, a scalar between $0$ and $1$ shr
 Basically you can imagine a vector space as a self-contained world for vectors. The eight properties above all say the same thing in different words: whatever you do inside the space using the two allowed operations, you never leave it.
 Add any two vectors and the result is still in the space. Scale any vector by any number and the result is still in the space.
 This is the property of *closure*, and it is what makes a set a vector space rather than just a loose collection of arrows.
+
+#theorem(title: "Unique Additive Identity")[
+  A vector space has a unique additive identity
+]
+#proof[
+  Let's say that $0$ and $0'$ are *both* additive identities. It must follow that:
+  $
+    0' = 0' + 0 quad "additive identity" \
+    = 0 + 0' quad "commutativity" \
+    = 0 quad "additive identity"
+  $
+]
+
+We can also prove the inverse element is unique:
+#theorem(title: "Unique Inverse")[
+  Every element in a vector space has a unique additive inverse.
+]
+#proof[
+  Let's say $V$ is a vector space, $v, w, w' in V$ and $w, w'$ are *both* the inverse of $v$. We could argue that:
+  $
+    w = w + 0 quad "additive identity" \
+    = w + (v + w') quad "definition of inverse"\
+    = (w + v) + w' quad "associativity"\
+    = 0 + w' quad "definition of inverse"\
+    = w' quad "additive identity" 
+  $
+]
